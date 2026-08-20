@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gurkirat Singh Mallya — Software Engineer &amp; Game Developer</title>
+<meta name="description" content="Gurkirat Singh Mallya — CS student building toward AI/ML engineering. Indie game developer of EchoCaverns. 110+ day LeetCode streak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10141a;
+    --bg-raised: #171d25;
+    --panel: #1b222b;
+    --border: #2a333d;
+    --moss: #7a9b7e;
+    --moss-dim: #4d6350;
+    --amber: #d9a94f;
+    --text: #e9e7de;
+    --text-dim: #8c96a3;
+    --text-faint: #5c6672;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* subtle vignette + scanline texture, echoes the game's atmosphere without being kitschy */
+  body::before{
+    content:"";
+    position: fixed; inset:0;
+    pointer-events:none;
+    z-index: 1;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(122,155,126,0.06), transparent 60%),
+      radial-gradient(ellipse at 100% 100%, rgba(217,169,79,0.04), transparent 55%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap{ max-width: 980px; margin: 0 auto; padding: 0 28px; }
+
+  ::selection{ background: var(--moss-dim); color: var(--text); }
+
+  /* ---------- nav ---------- */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(16,20,26,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height: 64px;
+  }
+  .brand{
+    font-family: var(--font-mono);
+    font-size: 15px;
+    color: var(--moss);
+    letter-spacing: 0.02em;
+  }
+  .brand span{ color: var(--text-faint); }
+  .navlinks{ display:flex; gap: 28px; font-size: 14px; }
+  .navlinks a{ color: var(--text-dim); transition: color 0.2s; position:relative; }
+  .navlinks a:hover{ color: var(--text); }
+  .navlinks a:focus-visible{ outline: 2px solid var(--amber); outline-offset: 4px; }
+
+  /* ---------- hero: terminal boot sequence ---------- */
+  header.hero{
+    padding: 96px 0 72px;
+    position: relative;
+    z-index: 2;
+  }
+  .terminal{
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.015);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; background: var(--border); }
+  .terminal-label{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-faint);
+    margin-left: 8px;
+  }
+  .terminal-body{
+    padding: 28px 24px 30px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+  }
+  .terminal-line{ color: var(--text-dim); margin-bottom: 6px; }
+  .terminal-line .prompt{ color: var(--moss); }
+  .terminal-line .path{ color: var(--amber); }
+  .type-out{
+    color: var(--text);
+    display:inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid var(--amber);
+    animation: typing 1.6s steps(28, end) forwards, blink 0.8s step-end infinite;
+    max-width: 0;
+  }
+  @keyframes typing{ from{ max-width:0; } to{ max-width: 30ch; } }
+  @keyframes blink{ 50%{ border-color: transparent; } }
+
+  h1.title{
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(34px, 5.4vw, 54px);
+    line-height: 1.08;
+    margin: 30px 0 14px;
+    letter-spacing: -0.01em;
+  }
+  h1.title .accent{ color: var(--moss); }
+  .tagline{
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 560px;
+    margin-bottom: 30px;
+  }
+  .hero-cta{ display:flex; gap: 14px; flex-wrap: wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 11px 20px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .btn:focus-visible{ outline: 2px solid var(--amber); outline-offset: 3px; }
+  .btn-primary{
+    background: var(--moss);
+    color: #10140f;
+    font-weight: 600;
+  }
+  .btn-primary:hover{ transform: translateY(-2px); }
+  .btn-ghost{
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-ghost:hover{ border-color: var(--moss-dim); transform: translateY(-2px); }
+
+  /* ---------- streak / stats bar : the signature element ---------- */
+  section.stats{ padding: 10px 0 64px; position:relative; z-index:2; }
+  .stat-panel{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 640px){ .stat-panel{ grid-template-columns: 1fr; } }
+  .stat-item{ position: relative; }
+  .stat-label{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-faint);
+    margin-bottom: 8px;
+  }
+  .stat-value{
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .stat-value .unit{ font-size:15px; color: var(--text-dim); font-weight:500; margin-left:4px; }
+  .xp-bar{
+    margin-top: 10px;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--bg-raised);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .xp-fill{
+    height: 100%;
+    width: 78%;
+    background: linear-gradient(90deg, var(--moss-dim), var(--moss));
+    border-radius: 4px;
+  }
+
+  /* ---------- section shared ---------- */
+  section{ padding: 60px 0; position: relative; z-index: 2; }
+  .section-head{ margin-bottom: 36px; display:flex; align-items:flex-end; justify-content:space-between; gap: 20px; flex-wrap: wrap; }
+  .detail-link{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--amber);
+    border: 1px solid var(--moss-dim);
+    padding: 7px 14px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .detail-link:hover{ border-color: var(--amber); transform: translateY(-1px); }
+  .detail-link:focus-visible{ outline: 2px solid var(--amber); outline-offset: 3px; }
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  h2{
+    font-family: var(--font-display);
+    font-size: clamp(24px, 3.4vw, 32px);
+    font-weight: 600;
+  }
+  .lede{ color: var(--text-dim); max-width: 620px; margin-top: 10px; font-size: 15px; }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid; grid-template-columns: 1.3fr 1fr; gap: 48px;
+    align-items: start;
+  }
+  @media (max-width: 720px){ .about-grid{ grid-template-columns: 1fr; } }
+  .about-text p{ color: var(--text-dim); margin-bottom: 16px; font-size: 15px; }
+  .about-text strong{ color: var(--text); font-weight: 600; }
+  .info-card{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .info-row{
+    display:flex; justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13.5px;
+  }
+  .info-row:last-child{ border-bottom: none; }
+  .info-row .k{ color: var(--text-faint); font-family: var(--font-mono); }
+  .info-row .v{ color: var(--text); text-align: right; }
+
+  /* ---------- projects: save-file slots ---------- */
+  .project-card{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 20px;
+    position: relative;
+    transition: border-color 0.2s ease;
+  }
+  .project-card:hover{ border-color: var(--moss-dim); }
+  .project-card::before{
+    content: attr(data-slot);
+    position: absolute;
+    top: 24px; right: 28px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-faint);
+    letter-spacing: 0.06em;
+  }
+  .project-top{ display:flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .project-title{
+    font-family: var(--font-display);
+    font-size: 21px;
+    font-weight: 600;
+  }
+  .project-status{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid var(--moss-dim);
+    color: var(--moss);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .project-desc{ color: var(--text-dim); font-size: 14.5px; margin-bottom: 16px; max-width: 640px; }
+  .tag-row{ display:flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tag{
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 5px;
+  }
+  .project-links{ display:flex; gap: 18px; font-size: 13.5px; }
+  .project-links a{ color: var(--amber); }
+  .project-links a:hover{ text-decoration: underline; }
+
+  /* ---------- skills ---------- */
+  .skill-groups{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 720px){ .skill-groups{ grid-template-columns: 1fr; } }
+  .skill-group h3{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--moss);
+    margin-bottom: 14px;
+  }
+  .skill-list{ list-style:none; }
+  .skill-list li{
+    color: var(--text-dim);
+    font-size: 14px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .skill-list li:last-child{ border-bottom:none; }
+
+  /* ---------- education ---------- */
+  .edu-card{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 26px 28px;
+    display:flex; justify-content:space-between; align-items:flex-start; gap:20px; flex-wrap:wrap;
+  }
+  .edu-institute{ font-family: var(--font-display); font-size: 19px; font-weight:600; margin-bottom:4px; }
+  .edu-degree{ color: var(--text-dim); font-size: 14.5px; }
+  .edu-loc{ color: var(--text-faint); font-size: 13px; font-family: var(--font-mono); margin-top:6px; }
+  .edu-cgpa{
+    text-align: right;
+  }
+  .edu-cgpa .num{ font-family: var(--font-display); font-size: 26px; font-weight:700; color: var(--moss); }
+  .edu-cgpa .lbl{ font-family: var(--font-mono); font-size: 11px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.06em; }
+
+  /* ---------- certificates ---------- */
+  .cert-list{ display:flex; flex-direction:column; gap:14px; }
+  .cert-row{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 22px;
+    display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;
+    transition: border-color 0.2s ease;
+  }
+  .cert-row:hover{ border-color: var(--moss-dim); }
+  .cert-name{ font-weight:600; font-size: 15px; }
+  .cert-meta{ color: var(--text-faint); font-family: var(--font-mono); font-size: 12.5px; margin-top: 4px; }
+
+  /* ---------- achievements ---------- */
+  .ach-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 720px){ .ach-grid{ grid-template-columns: 1fr; } }
+  .ach-card{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .ach-num{ font-family: var(--font-display); font-size: 30px; font-weight:700; color: var(--amber); }
+  .ach-desc{ color: var(--text-dim); font-size: 13.5px; margin-top: 8px; }
+
+  /* ---------- contact ---------- */
+  .contact-panel{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+  }
+  .contact-panel h2{ margin-bottom: 12px; }
+  .contact-panel p{ color: var(--text-dim); max-width: 460px; margin: 0 auto 26px; font-size: 15px; }
+  .contact-links{ display:flex; gap: 14px; justify-content:center; flex-wrap: wrap; }
+
+  footer{
+    padding: 30px 0 50px;
+    text-align: center;
+    color: var(--text-faint);
+    font-size: 13px;
+    font-family: var(--font-mono);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .type-out{ animation: none; max-width: none; border-right: none; }
+    html{ scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">gurkirat<span>.dev</span></div>
+    <div class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#certificates">Certificates</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        <span class="terminal-label">gurkirat@dev — whoami</span>
+      </div>
+      <div class="terminal-body">
+        <div class="terminal-line"><span class="prompt">$</span> <span class="path">~/</span>whoami</div>
+        <div class="terminal-line">&gt; <span class="type-out">B.Tech CSE · building in public</span></div>
+      </div>
+    </div>
+
+    <h1 class="title">I build systems that work<br>— and worlds you can <span class="accent">explore</span>.</h1>
+    <p class="tagline">Computer Science student focused on AI/ML engineering, with a parallel life as an indie game developer. I like problems with a correct answer and problems with none.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#work">See the work</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<section class="stats" id="streak">
+  <div class="wrap">
+    <div class="stat-panel">
+      <div class="stat-item">
+        <div class="stat-label">LeetCode Streak</div>
+        <div class="stat-value">110<span class="unit">+ days</span></div>
+        <div class="xp-bar"><div class="xp-fill"></div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Daily Series</div>
+        <div class="stat-value" style="font-size:22px;">Java Journey</div>
+        <div class="stat-label" style="margin-top:8px; text-transform:none; letter-spacing:0;">One problem, one post, every day — on LinkedIn.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label">Currently Shipping</div>
+        <div class="stat-value" style="font-size:22px;">EchoCaverns</div>
+        <div class="stat-label" style="margin-top:8px; text-transform:none; letter-spacing:0;">2D metroidvania, built solo in Unity/URP.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="eyebrow">About</div>
+        <h2 style="margin-bottom:16px;">Two disciplines, one habit: finish things.</h2>
+        <p>I'm <strong>Gurkirat</strong>, a B.Tech Computer Science and Engineering student. My coursework runs through software engineering, data structures and algorithms, database systems, and digital electronics — but the thread that actually drives me is <strong>AI/ML engineering</strong>, which I'm building toward deliberately rather than incidentally.</p>
+        <p>Outside coursework, I run <strong>Java Journey</strong>, a daily LeetCode series I post to LinkedIn, and I'm the solo developer behind <strong>EchoCaverns</strong>, a 2D metroidvania built in Unity — where I write my own shaders, design levels, and am currently learning networked multiplayer from the ground up.</p>
+        <p>I think of both as the same skill: breaking a large, ambiguous problem into pieces small enough to actually ship.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-row"><span class="k">STATUS</span><span class="v">B.Tech CSE, CGPA 9.49</span></div>
+        <div class="info-row"><span class="k">FOCUS</span><span class="v">AI / ML Engineering</span></div>
+        <div class="info-row"><span class="k">LANGUAGES</span><span class="v">Java, C, C#, Python, JS</span></div>
+        <div class="info-row"><span class="k">BUILDING</span><span class="v">EchoCaverns (Unity/URP)</span></div>
+        <div class="info-row"><span class="k">STREAK</span><span class="v">110+ days, Java Journey</span></div>
+        <div class="info-row"><span class="k">LOCATION</span><span class="v">Phagwara, Punjab</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Education</div>
+        <h2>Where it's being built</h2>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-institute">Lovely Professional University</div>
+        <div class="edu-degree">Bachelor of Technology — Computer Science and Engineering</div>
+        <div class="edu-loc">Phagwara, Punjab · Aug 2025 — Present</div>
+      </div>
+      <div class="edu-cgpa">
+        <div class="num">9.49</div>
+        <div class="lbl">CGPA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Selected Work</div>
+        <h2>Save files</h2>
+        <p class="lede">Projects worth loading up. Each one taught me something the last one didn't.</p>
+      </div>
+      <a class="detail-link" href="projects.html" target="_blank" rel="noopener">View full breakdown ↗</a>
+    </div>
+
+    <div class="project-card" data-slot="SLOT 01">
+      <div class="project-top">
+        <div class="project-title">EchoCaverns</div>
+        <div class="project-status">Jun – Aug 2026</div>
+      </div>
+      <div class="project-desc">A complete 2D Metroidvania: responsive movement, double jump, dash, wall jump, and melee combat across 5 interconnected underground areas with 5 multi-phase boss encounters. Full progression system — enemy AI, Echo Shards, unlockable abilities — supporting 2–3 hours of exploration. Currently extending into chaotic co-op multiplayer with Netcode for GameObjects.</div>
+      <div class="tag-row">
+        <span class="tag">Unity</span><span class="tag">C#</span><span class="tag">Unity 2D Physics</span><span class="tag">Tilemaps</span><span class="tag">Animator</span><span class="tag">Netcode for GameObjects</span>
+      </div>
+      <div class="project-links">
+        <a href="https://github.com/Gurkirat-SM" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="projects.html#echocaverns" target="_blank" rel="noopener">Full details ↗</a>
+      </div>
+    </div>
+
+    <div class="project-card" data-slot="SLOT 02">
+      <div class="project-top">
+        <div class="project-title">Gaming Social Media Platform</div>
+        <div class="project-status">Academic</div>
+      </div>
+      <div class="project-desc">A Discord-inspired social platform for gamers, built as a full software engineering project for CSE320. Took it from requirements through design: SRS documentation, DFD diagrams across three levels, and a full test phase covering 22 test cases across 6 modules.</div>
+      <div class="tag-row">
+        <span class="tag">SRS &amp; Design Docs</span><span class="tag">DFD Modeling</span><span class="tag">Software Testing</span><span class="tag">SDLC</span>
+      </div>
+    </div>
+
+    <div class="project-card" data-slot="SLOT 03">
+      <div class="project-top">
+        <div class="project-title">Java Journey</div>
+        <div class="project-status">Daily · 110+ days</div>
+      </div>
+      <div class="project-desc">A daily discipline, not a single build: one LeetCode problem solved in Java and broken down publicly every day — approach, complexity analysis, and the reasoning behind it — posted to LinkedIn as a running record of consistency.</div>
+      <div class="tag-row">
+        <span class="tag">Java</span><span class="tag">Data Structures</span><span class="tag">Algorithms</span><span class="tag">Public Writing</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Toolkit</div>
+        <h2>What I build with</h2>
+      </div>
+      <a class="detail-link" href="skills.html" target="_blank" rel="noopener">View full toolkit ↗</a>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <ul class="skill-list">
+          <li>Java</li>
+          <li>JavaScript</li>
+          <li>C</li>
+          <li>C#</li>
+          <li>Python</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Technologies</h3>
+        <ul class="skill-list">
+          <li>HTML &amp; CSS</li>
+          <li>Unity / Unreal / Godot</li>
+          <li>Blender</li>
+        </ul>
+      </div>
+      <div class="skill-group">
+        <h3>Databases, Tools &amp; Soft Skills</h3>
+        <ul class="skill-list">
+          <li>MySQL, PostgreSQL</li>
+          <li>Git / GitHub</li>
+          <li>Problem Solving</li>
+          <li>Team Collaboration · Adaptability</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certificates">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Credentials</div>
+        <h2>Certificates</h2>
+      </div>
+      <a class="detail-link" href="certificates.html" target="_blank" rel="noopener">View all credentials ↗</a>
+    </div>
+    <div class="cert-list">
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Version Control by Meta</div>
+          <div class="cert-meta">Coursera · Aug 2025</div>
+        </div>
+      </div>
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">HTML and CSS in Depth</div>
+          <div class="cert-meta">Coursera · Sep 2024</div>
+        </div>
+      </div>
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Django Web Framework</div>
+          <div class="cert-meta">Coursera · May 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Track Record</div>
+        <h2>Achievements</h2>
+      </div>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card">
+        <div class="ach-num">200+</div>
+        <div class="ach-desc">Programming problems solved across online coding platforms through regular practice.</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-num">100 Days</div>
+        <div class="ach-desc">LeetCode badge earned by maintaining consistent daily problem solving.</div>
+      </div>
+      <div class="ach-card">
+        <div class="ach-num">Top 500</div>
+        <div class="ach-desc">Ranked top 500 in LeetCode Contest 490, solving all 4 provided problems.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-panel">
+      <div class="eyebrow" style="justify-content:center; display:flex;">Get in touch</div>
+      <h2>Let's talk about what you're building.</h2>
+      <p>Open to internships, collaborations, and conversations about AI/ML engineering or game development. Reach out through any of these.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:gurkiratsingh8093@gmail.com">Email me</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/gurkirat-singh-9a179b379" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn btn-ghost" href="https://github.com/Gurkirat-SM" target="_blank" rel="noopener">GitHub</a>
+      </div>
+      <div style="margin-top:20px; color: var(--text-faint); font-family: var(--font-mono); font-size: 13px;">+91-9320614098</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  built by gurkirat — deployed on vercel
+</footer>
+
+</body>
+</html>
