@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -29,6 +29,7 @@
   --display:'Space Grotesk',sans-serif;
   --body:'Inter',sans-serif;
   --mono:'JetBrains Mono',monospace;
+  --script:'Caveat',cursive;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -200,6 +201,51 @@ section{padding:105px 0}
 .about-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:60px}
 .about-copy p{color:var(--muted);margin-bottom:18px;font-size:15px}
 .about-copy strong{color:var(--text)}
+
+/* polaroid-style portrait, floated so text wraps around it like an actual page */
+.portrait{
+  float:left;
+  width:190px;
+  margin:4px 26px 14px 0;
+  background:#f4f2ec;
+  padding:10px 10px 34px;
+  border-radius:3px;
+  transform:rotate(-3deg);
+  box-shadow:0 18px 40px rgba(0,0,0,.45), 0 2px 0 rgba(255,255,255,.04) inset;
+}
+.portrait img{
+  display:block;
+  width:100%;
+  border-radius:1px;
+  filter:grayscale(.15) contrast(1.03);
+}
+.portrait-cap{
+  position:absolute;
+  bottom:6px;left:0;right:0;
+  text-align:center;
+  font-family:var(--script);
+  font-size:19px;
+  color:#2c2c2c;
+}
+.portrait-wrap{position:relative}
+.portrait-tape{
+  position:absolute;
+  top:-12px;left:50%;
+  transform:translateX(-50%) rotate(-2deg);
+  width:70px;height:22px;
+  background:rgba(228,180,92,.35);
+  border:1px solid rgba(228,180,92,.15);
+}
+.about-copy::after{content:"";display:block;clear:both}
+.margin-note{
+  color:var(--faint);
+  font-family:var(--script);
+  font-size:17px;
+  display:inline-block;
+  margin-top:2px;
+}
+.squiggle{display:block;margin-top:6px;width:150px;height:10px}
+.squiggle path{stroke:var(--amber);stroke-width:2.5;fill:none;stroke-linecap:round}
 .info-card{
   background:var(--panel);
   border:1px solid var(--border);
@@ -355,6 +401,9 @@ footer{padding:30px 0 50px;color:var(--faint);font:10.5px var(--mono);text-align
   .skills-grid{grid-template-columns:repeat(2,1fr)}
   .cert-ach-grid{grid-template-columns:1fr}
 }
+@media(max-width:560px){
+  .portrait{float:none;margin:0 auto 22px;width:170px}
+}
 @media(max-width:700px){
   .container{width:min(var(--max),calc(100% - 28px))}
   section{padding:75px 0}
@@ -453,11 +502,17 @@ footer{padding:30px 0 50px;color:var(--faint);font:10.5px var(--mono);text-align
       <div class="section-head reveal">
         <div class="section-label">01 · About me</div>
         <h2 class="section-title">A student who likes to build.</h2>
+        <svg class="squiggle" viewBox="0 0 150 10" xmlns="http://www.w3.org/2000/svg"><path d="M2 6c15-8 25 6 40-2s25 6 40-2 25 6 40-2 25 6 25 6"/></svg>
         <p class="section-desc">My interests sit at the intersection of software engineering, algorithms, AI/ML, and interactive systems.</p>
       </div>
 
       <div class="about-grid">
         <div class="about-copy reveal">
+          <div class="portrait-wrap portrait">
+            <div class="portrait-tape"></div>
+            <img src="assets/gurkirat.jpg" alt="Gurkirat Singh Mallya">
+            <div class="portrait-cap">that's me</div>
+          </div>
           <p>
             I'm <strong>Gurkirat</strong>, a B.Tech Computer Science and Engineering student.
             My coursework spans software engineering, data structures and algorithms,
@@ -475,6 +530,7 @@ footer{padding:30px 0 50px;color:var(--faint);font:10.5px var(--mono);text-align
             systems, learning whatever is necessary, and eventually shipping something
             people can interact with.
           </p>
+          <span class="margin-note">— still debugging, always learning</span>
         </div>
 
         <div class="info-card reveal">
